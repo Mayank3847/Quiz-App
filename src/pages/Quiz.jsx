@@ -178,12 +178,12 @@ function Quiz() {
 
   if (loading) {
     return (
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
         minHeight: '100vh',
-        fontSize: '18px' 
+        fontSize: '18px'
       }}>
         Loading questions...
       </div>
@@ -198,32 +198,36 @@ function Quiz() {
     <div style={{
       minHeight: '100vh',
       backgroundColor: '#f8f9fa',
-      padding: '20px',
+      padding: '10px',
       fontFamily: 'Arial, sans-serif'
     }}>
       {/* Header */}
       <div style={{
         maxWidth: '800px',
         margin: '0 auto',
-        marginBottom: '30px'
+        marginBottom: '20px',
+        padding: '0 10px'
       }}>
         <div style={{
           display: 'flex',
           justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: '20px'
+          flexWrap: 'wrap',
+          gap: '10px',
+          marginBottom: '15px'
         }}>
           <h1 style={{
             margin: 0,
-            fontSize: '24px',
+            fontSize: '20px',
             fontWeight: 'bold',
             color: '#333'
           }}>
             🧠 Quiz Challenge
           </h1>
           <div style={{
-            fontSize: '14px',
-            color: '#666'
+            fontSize: '13px',
+            color: '#666',
+            textAlign: 'right',
+            flex: 1
           }}>
             {currentQ?.category && (
               <>
@@ -237,45 +241,33 @@ function Quiz() {
         <div style={{
           display: 'flex',
           justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: '20px'
+          flexDirection: 'column',
+          gap: '6px',
+          marginBottom: '15px'
         }}>
-          <div style={{ flex: 1 }}>
+          <div style={{ fontSize: '13px', color: '#666', display: 'flex', justifyContent: 'space-between' }}>
+            <span>Question {currentIndex + 1} of {questions.length}</span>
+            <span style={{ fontWeight: 'bold' }}>Score: {score}/{questions.length}</span>
+          </div>
+          <div style={{
+            background: '#e9ecef',
+            height: '6px',
+            borderRadius: '4px',
+            overflow: 'hidden'
+          }}>
             <div style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              marginBottom: '8px'
-            }}>
-              <span style={{ fontSize: '14px', color: '#666' }}>
-                Question {currentIndex + 1} of {questions.length}
-              </span>
-              <span style={{ fontSize: '14px', fontWeight: 'bold' }}>
-                Score: {score}/{questions.length}
-              </span>
-            </div>
-            <div style={{
-              background: '#e9ecef',
-              height: '8px',
-              borderRadius: '4px',
-              overflow: 'hidden'
-            }}>
-              <div style={{
-                width: `${progressPercentage}%`,
-                background: '#007bff',
-                height: '100%',
-                transition: 'width 0.3s ease',
-                borderRadius: '4px'
-              }} />
-            </div>
+              width: `${progressPercentage}%`,
+              background: '#007bff',
+              height: '100%',
+              transition: 'width 0.3s ease',
+              borderRadius: '4px'
+            }} />
           </div>
         </div>
       </div>
 
       {/* Main Quiz Card */}
-      <div style={{
-        maxWidth: '800px',
-        margin: '0 auto'
-      }}>
+      <div style={{ maxWidth: '800px', margin: '0 auto' }}>
         <motion.div
           key={currentIndex}
           initial={{ opacity: 0, y: 20 }}
@@ -284,38 +276,41 @@ function Quiz() {
           style={{
             background: 'white',
             borderRadius: '12px',
-            padding: '40px',
+            padding: '20px',
             boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
             marginBottom: '20px'
           }}
         >
-          {/* Timer and Category */}
+          {/* Timer and Difficulty */}
           <div style={{
             display: 'flex',
             justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: '30px'
+            flexWrap: 'wrap',
+            gap: '10px',
+            marginBottom: '20px'
           }}>
             <div style={{
-              background: currentQ?.difficulty === 'easy' ? '#d4edda' : 
-                         currentQ?.difficulty === 'medium' ? '#fff3cd' : '#f8d7da',
-              color: currentQ?.difficulty === 'easy' ? '#155724' : 
-                     currentQ?.difficulty === 'medium' ? '#856404' : '#721c24',
+              background: currentQ?.difficulty === 'easy' ? '#d4edda' :
+                currentQ?.difficulty === 'medium' ? '#fff3cd' : '#f8d7da',
+              color: currentQ?.difficulty === 'easy' ? '#155724' :
+                currentQ?.difficulty === 'medium' ? '#856404' : '#721c24',
               padding: '4px 12px',
               borderRadius: '20px',
               fontSize: '12px',
               fontWeight: 'bold',
-              textTransform: 'lowercase'
+              textTransform: 'lowercase',
+              alignSelf: 'flex-start'
             }}>
               {currentQ?.difficulty || 'medium'}
             </div>
             <div style={{
-              fontSize: '16px',
+              fontSize: '14px',
               fontWeight: 'bold',
               color: timeLeft <= 5 ? '#dc3545' : '#28a745',
               background: timeLeft <= 5 ? '#f8d7da' : '#d4edda',
-              padding: '8px 16px',
-              borderRadius: '20px'
+              padding: '6px 12px',
+              borderRadius: '20px',
+              alignSelf: 'flex-start'
             }}>
               Time Left: {timeLeft}s
             </div>
@@ -325,19 +320,20 @@ function Quiz() {
             <div style={{
               color: '#856404',
               background: '#fff3cd',
-              padding: '12px',
+              padding: '10px',
               borderRadius: '8px',
-              marginBottom: '20px',
-              border: '1px solid #ffeaa7'
+              marginBottom: '15px',
+              border: '1px solid #ffeaa7',
+              fontSize: '13px'
             }}>
               {error}
             </div>
           )}
 
           {/* Question */}
-          <div style={{ marginBottom: '30px' }}>
+          <div style={{ marginBottom: '20px' }}>
             <h2 style={{
-              fontSize: '22px',
+              fontSize: '18px',
               fontWeight: '600',
               color: '#333',
               lineHeight: '1.4',
@@ -346,11 +342,7 @@ function Quiz() {
           </div>
 
           {/* Options */}
-          <div style={{ 
-            marginBottom: '40px',
-            width: '100%',
-            overflow: 'visible'
-          }}>
+          <div style={{ marginBottom: '20px', width: '100%' }}>
             {currentQ.options.map((opt, idx) => (
               <motion.button
                 key={idx}
@@ -359,31 +351,32 @@ function Quiz() {
                 onClick={() => handleAnswerSelect(opt)}
                 style={{
                   width: '100%',
-                  margin: '8px 0',
-                  padding: '16px 20px',
+                  margin: '6px 0',
+                  padding: '12px 14px',
                   borderRadius: '10px',
                   border: selected === opt ? '2px solid #007bff' : '2px solid #e9ecef',
                   background: selected === opt ? '#007bff' : 'white',
                   color: selected === opt ? 'white' : '#333',
                   cursor: 'pointer',
-                  fontSize: '16px',
+                  fontSize: '15px',
                   textAlign: 'left',
                   transition: 'all 0.2s ease',
                   display: 'flex',
-                  alignItems: 'center'
+                  alignItems: 'center',
+                  flexWrap: 'wrap'
                 }}
               >
                 <div style={{
-                  width: '24px',
-                  height: '24px',
+                  width: '20px',
+                  height: '20px',
                   borderRadius: '50%',
                   border: selected === opt ? '2px solid white' : '2px solid #dee2e6',
                   background: selected === opt ? 'white' : 'transparent',
-                  marginRight: '12px',
+                  marginRight: '10px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '12px',
+                  fontSize: '11px',
                   color: selected === opt ? '#007bff' : '#666'
                 }}>
                   {String.fromCharCode(65 + idx)}
@@ -398,23 +391,24 @@ function Quiz() {
         <div style={{
           display: 'flex',
           justifyContent: 'space-between',
-          alignItems: 'center',
-          maxWidth: '800px',
-          margin: '0 auto'
+          gap: '8px',
+          flexWrap: 'wrap'
         }}>
           <button
             onClick={handlePrevious}
             disabled={currentIndex === 0}
             style={{
-              padding: '12px 24px',
+              flex: 1,
+              minWidth: '90px',
+              padding: '12px',
               borderRadius: '8px',
               border: '2px solid #6c757d',
               background: currentIndex === 0 ? '#e9ecef' : 'white',
               color: currentIndex === 0 ? '#6c757d' : '#495057',
               cursor: currentIndex === 0 ? 'not-allowed' : 'pointer',
-              fontSize: '16px',
+              fontSize: '14px',
               fontWeight: '500',
-              transition: 'all 0.2s ease'
+              textAlign: 'center'
             }}
           >
             ← Previous
@@ -423,15 +417,17 @@ function Quiz() {
           <button
             onClick={handleSkip}
             style={{
-              padding: '12px 24px',
+              flex: 1,
+              minWidth: '110px',
+              padding: '12px',
               borderRadius: '8px',
               border: '2px solid #dc3545',
               background: 'white',
               color: '#dc3545',
               cursor: 'pointer',
-              fontSize: '16px',
+              fontSize: '14px',
               fontWeight: '500',
-              transition: 'all 0.2s ease'
+              textAlign: 'center'
             }}
           >
             Skip Challenge
@@ -441,15 +437,17 @@ function Quiz() {
             onClick={handleNext}
             disabled={!selected}
             style={{
-              padding: '12px 24px',
+              flex: 1,
+              minWidth: '90px',
+              padding: '12px',
               borderRadius: '8px',
               border: 'none',
               background: !selected ? '#e9ecef' : '#007bff',
               color: !selected ? '#6c757d' : 'white',
               cursor: !selected ? 'not-allowed' : 'pointer',
-              fontSize: '16px',
+              fontSize: '14px',
               fontWeight: '500',
-              transition: 'all 0.2s ease'
+              textAlign: 'center'
             }}
           >
             {currentIndex + 1 === questions.length ? 'Finish Quiz' : 'Next →'}
@@ -461,15 +459,13 @@ function Quiz() {
       {showSkipModal && (
         <div style={{
           position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
+          top: 0, left: 0, right: 0, bottom: 0,
           background: 'rgba(0, 0, 0, 0.5)',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          zIndex: 1000
+          zIndex: 1000,
+          padding: '10px'
         }}>
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
@@ -477,30 +473,31 @@ function Quiz() {
             style={{
               background: 'white',
               borderRadius: '12px',
-              padding: '30px',
+              padding: '20px',
               maxWidth: '400px',
-              width: '90%',
+              width: '100%',
               textAlign: 'center',
               boxShadow: '0 10px 40px rgba(0, 0, 0, 0.2)'
             }}
           >
-            <h3 style={{ marginBottom: '20px', color: '#333' }}>
+            <h3 style={{ marginBottom: '15px', color: '#333', fontSize: '18px' }}>
               Skip Quiz Challenge?
             </h3>
-            <p style={{ marginBottom: '25px', color: '#666', lineHeight: '1.5' }}>
+            <p style={{ marginBottom: '20px', color: '#666', lineHeight: '1.5', fontSize: '14px' }}>
               Are you sure you want to quit? Your current score of <strong>{score}/{questions.length}</strong> will be your final score.
             </p>
-            <div style={{ display: 'flex', gap: '15px', justifyContent: 'center' }}>
+            <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>
               <button
                 onClick={cancelSkip}
                 style={{
-                  padding: '12px 24px',
+                  flex: 1,
+                  padding: '10px',
                   borderRadius: '8px',
                   border: '2px solid #6c757d',
                   background: 'white',
                   color: '#495057',
                   cursor: 'pointer',
-                  fontSize: '16px',
+                  fontSize: '14px',
                   fontWeight: '500'
                 }}
               >
@@ -509,13 +506,14 @@ function Quiz() {
               <button
                 onClick={confirmSkip}
                 style={{
-                  padding: '12px 24px',
+                  flex: 1,
+                  padding: '10px',
                   borderRadius: '8px',
                   border: 'none',
                   background: '#dc3545',
                   color: 'white',
                   cursor: 'pointer',
-                  fontSize: '16px',
+                  fontSize: '14px',
                   fontWeight: '500'
                 }}
               >
